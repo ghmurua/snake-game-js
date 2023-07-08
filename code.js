@@ -1,12 +1,19 @@
-snake = [60,61,62,63,64,65]     // la posicion 0 va borrando la cola
-long = snake.length-1
+const game = document.querySelector('.game')
+
+snake = []
+long = 0
 direction = 'R'
 
 function newGame() {
+    game.innerHTML = ''
+    snake = [60,61,62,63]
+    long = snake.length-1
+    direction = 'R'
+
     for (let i=1; i<=323; i++) {
         let box = document.createElement('DIV')
         box.setAttribute('class',`tile t${i}`)
-        document.querySelector('.game').appendChild(box)
+        game.appendChild(box)
     }
 
     for (let j=1; j<=19; j++) {

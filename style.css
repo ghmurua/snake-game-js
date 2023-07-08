@@ -1,3 +1,7 @@
+:root {
+    --main-bg-color: burlywood;
+}
+
 body {
     margin: 0px;
     padding: 0px;
@@ -7,7 +11,7 @@ body {
     display: grid;
     height: 100vh;
     place-items: center;
-    background-color: burlywood;
+    background-color: var(--main-bg-color);
 }
 
 .game {
@@ -31,4 +35,16 @@ body {
 
 .wall {
     background-color: sienna;
+}
+
+.keyCapturer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--main-bg-color);
+    color: var(--main-bg-color);
+    border: 0;
+}
+.keyCapturer:focus {
+    outline: none;
 }
