@@ -1,0 +1,30 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+.main {
+    display: grid;
+    height: 100vh;
+    place-items: center;
+    background-color: burlywood;
+}
+
+.game {
+    display: grid;
+    grid-template-columns: repeat(17,auto);
+    border: 3px double black;
+}
+
+.tile {
+    width: 25px;
+    height: 25px;
+}
+
+.snakeBody {
+    background-color: olivedrab;
+}
+
+.snakeHead {
+    background-color: green;
+}
