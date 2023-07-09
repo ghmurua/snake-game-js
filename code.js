@@ -1,15 +1,24 @@
 const game = document.querySelector('.game')
 const pointsInfo = document.querySelector('.pointsInfo')
 
-snake = []
-long = 0
-direction = 'R'
-walls = []
-random = 0
-points = 0
-eating = false
+let snake = []
+let long = 0
+let direction = 'R'
+let walls = []
+let random = 0
+let points = 0
+let eating = false
+let moved = false
+let speed = 0
 
 let clockInterval = ''
+
+function setClock() {
+    speed -= 5
+    clockInterval = setInterval(()=>{
+        moving()
+    }, speed)
+}
 
 function newGame() {
     game.innerHTML = ''
@@ -18,6 +27,7 @@ function newGame() {
     direction = 'R'
     points = 0
     pointsInfo.innerHTML = `POINTS: ${points}`
+    speed = 300
 
     for (let i=1; i<=323; i++) {
         let box = document.createElement('DIV')
@@ -42,10 +52,7 @@ function newGame() {
 
     initSnake()
     putFruit()
-
-    clockInterval = setInterval(()=>{
-        moving()
-    }, 250)
+    setClock()
 }
 
 newGame()
@@ -77,7 +84,8 @@ function showMovement() {
     document.querySelector(`.t${body}`).classList.replace('snakeHead','snakeBody')
     end = snake[0]
     document.querySelector(`.t${end}`).classList.toggle('snakeBody')
-    
+
+    moved = false
     crash(head)
     eatFruit(head)
 }
@@ -110,6 +118,9 @@ function eatFruit(head) {
         document.querySelector(`.t${random}`).classList.toggle('apple')
         eating = true
         putFruit()
+
+        clearInterval(clockInterval)
+        setClock()
     }
 }
 
