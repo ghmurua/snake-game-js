@@ -17,7 +17,13 @@ function onKeyDownHandler(event) {
 
     document.querySelector('.keyInfo').innerHTML = `${kc} ${direction}`
 
-    moving()
+    // ESC
+    if (kc === 27) clearInterval(clockInterval)
+    // SPACE
+    if (kc === 32) {
+        clearInterval(clockInterval)
+        newGame()
+    }
 }
 
 document.querySelector('.main').addEventListener("mouseup",(e)=>{

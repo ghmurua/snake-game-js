@@ -1,4 +1,5 @@
 const game = document.querySelector('.game')
+const pointsInfo = document.querySelector('.pointsInfo')
 
 snake = []
 long = 0
@@ -6,6 +7,9 @@ direction = 'R'
 walls = []
 random = 0
 points = 0
+eating = false
+
+let clockInterval = ''
 
 function newGame() {
     game.innerHTML = ''
@@ -13,6 +17,7 @@ function newGame() {
     long = snake.length-1
     direction = 'R'
     points = 0
+    pointsInfo.innerHTML = `POINTS: ${points}`
 
     for (let i=1; i<=323; i++) {
         let box = document.createElement('DIV')
@@ -37,6 +42,10 @@ function newGame() {
 
     initSnake()
     putFruit()
+
+    clockInterval = setInterval(()=>{
+        moving()
+    }, 250)
 }
 
 newGame()
@@ -49,20 +58,16 @@ function initSnake() {
 }
 
 function moving() {
-    try {
-        if (direction === 'L') head = snake[long] - 1
-        if (direction === 'U') head = snake[long] - 19
-        if (direction === 'R') head = snake[long] + 1
-        if (direction === 'D') head = snake[long] + 19
+    if (direction === 'L') head = snake[long] - 1
+    if (direction === 'U') head = snake[long] - 19
+    if (direction === 'R') head = snake[long] + 1
+    if (direction === 'D') head = snake[long] + 19
 
-        snake.push(head)
-        snake.shift()
+    snake.push(head)
+    if (eating === false) snake.shift()
+    else growSnake()
 
-        showMovement()
-    }
-    catch {
-        console.log('error: saliendose de los limites')
-    }
+    showMovement()
 }
 
 function showMovement() {
@@ -81,7 +86,7 @@ function crash(head) {
     const onWall = document.querySelector(`.t${head}`).classList.contains('wall')
     const onSnake = document.querySelector(`.t${head}`).classList.contains('snakeBody')
     if (onWall || onSnake) {
-        console.log('chocando')
+        clearInterval(clockInterval)
     }
 }
 
@@ -101,9 +106,15 @@ function putFruit() {
 function eatFruit(head) {
     if (head === random) {
         points += 1
-        document.querySelector('.pointsInfo').innerHTML = `${points}`
-        console.log('manzana deglutida')
+        pointsInfo.innerHTML = `POINTS: ${points}`
         document.querySelector(`.t${random}`).classList.toggle('apple')
+        eating = true
         putFruit()
     }
+}
+
+function growSnake() {
+    long++
+    eating = false
+    document.querySelector(`.t${snake[0]}`).classList.toggle('snakeBody')
 }
