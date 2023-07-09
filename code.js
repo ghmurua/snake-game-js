@@ -3,12 +3,16 @@ const game = document.querySelector('.game')
 snake = []
 long = 0
 direction = 'R'
+walls = []
+random = 0
+points = 0
 
 function newGame() {
     game.innerHTML = ''
     snake = [60,61,62,63]
     long = snake.length-1
     direction = 'R'
+    points = 0
 
     for (let i=1; i<=323; i++) {
         let box = document.createElement('DIV')
@@ -24,12 +28,15 @@ function newGame() {
     }
     for (let j=38; j<=304; j+=19) {
         document.querySelector(`.t${j}`).classList.add('wall')
+        walls.push(j)
     }
     for (let j=20; j<=286; j+=19) {
         document.querySelector(`.t${j}`).classList.add('wall')
+        walls.push(j)
     }
 
     initSnake()
+    putFruit()
 }
 
 newGame()
@@ -67,6 +74,7 @@ function showMovement() {
     document.querySelector(`.t${end}`).classList.toggle('snakeBody')
     
     crash(head)
+    eatFruit(head)
 }
 
 function crash(head) {
@@ -74,5 +82,28 @@ function crash(head) {
     const onSnake = document.querySelector(`.t${head}`).classList.contains('snakeBody')
     if (onWall || onSnake) {
         console.log('chocando')
+    }
+}
+
+function putFruit() {
+    lastRandom = random
+    random = Math.ceil(Math.random() * 282) + 21
+    if (walls.indexOf(random) < 0 && 
+        snake.indexOf(random) < 0 && 
+        random != lastRandom)
+    {
+        document.querySelector(`.t${random}`).classList.toggle('apple')
+    } else {
+        putFruit()
+    }
+}
+
+function eatFruit(head) {
+    if (head === random) {
+        points += 1
+        document.querySelector('.pointsInfo').innerHTML = `${points}`
+        console.log('manzana deglutida')
+        document.querySelector(`.t${random}`).classList.toggle('apple')
+        putFruit()
     }
 }

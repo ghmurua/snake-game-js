@@ -17,7 +17,6 @@ body {
 .game {
     display: grid;
     grid-template-columns: repeat(19,auto);
-    border: 3px double black;
 }
 
 .tile {
@@ -35,6 +34,10 @@ body {
 
 .wall {
     background-color: sienna;
+}
+
+.apple {
+    background-color: red;
 }
 
 .keyCapturer {
