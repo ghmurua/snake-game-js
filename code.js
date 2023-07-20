@@ -10,11 +10,11 @@ let points = 0
 let eating = false
 let moved = false
 let speed = 0
+let crashed = false
 
 let clockInterval = ''
 
 function setClock() {
-    speed -= 5
     clockInterval = setInterval(()=>{
         moving()
     }, speed)
@@ -28,11 +28,22 @@ function newGame() {
     points = 0
     pointsInfo.innerHTML = `POINTS: ${points}`
     speed = 300
+    crashed = false
+
+    let back = document.createElement('DIV')
+    back.setAttribute('class',`back`)
+    game.appendChild(back)
 
     for (let i=1; i<=323; i++) {
         let box = document.createElement('DIV')
         box.setAttribute('class',`tile t${i}`)
         game.appendChild(box)
+    }
+
+    for (let j=1; j<=323; j++) {
+        let backBox = document.createElement('DIV')
+        backBox.setAttribute('class',`tileBack b${j}`)
+        document.querySelector('.back').appendChild(backBox)
     }
 
     for (let j=1; j<=19; j++) {
@@ -95,6 +106,7 @@ function crash(head) {
     const onSnake = document.querySelector(`.t${head}`).classList.contains('snakeBody')
     if (onWall || onSnake) {
         clearInterval(clockInterval)
+        crashed = true
     }
 }
 
@@ -119,6 +131,7 @@ function eatFruit(head) {
         eating = true
         putFruit()
 
+        if (points % 3 === 0) speed -= 10
         clearInterval(clockInterval)
         setClock()
     }

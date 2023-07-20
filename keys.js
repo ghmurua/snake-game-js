@@ -1,3 +1,5 @@
+let pause = false
+
 function onKeyDownHandler(event) {
 
     let kc = event.which || event.keyCode;
@@ -18,12 +20,14 @@ function onKeyDownHandler(event) {
         moved = true
     }
 
-    document.querySelector('.keyInfo').innerHTML = `${kc} ${direction}`
-
     // ESC
-    if (kc === 27) clearInterval(clockInterval)
+    if (kc === 27 && crashed === false) {
+        pause = !pause
+        if (pause) clearInterval(clockInterval)
+        else setClock()
+    }
     // SPACE
-    if (kc === 32) {
+    if (kc === 32 && crashed === true) {
         clearInterval(clockInterval)
         newGame()
     }

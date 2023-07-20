@@ -1,5 +1,5 @@
 :root {
-    --main-bg-color: burlywood;
+    --main-bg-color: #ddc5a2;
 }
 
 body {
@@ -12,6 +12,7 @@ body {
     height: 100vh;
     place-items: center;
     background-color: var(--main-bg-color);
+    align-content: center;
 }
 
 .game {
@@ -19,25 +20,37 @@ body {
     grid-template-columns: repeat(19,auto);
 }
 
-.tile {
+.back {
+    position: absolute;
+    background-color: #f4ebdb;
+    z-index: 0;
+    display: grid;
+    grid-template-columns: repeat(19,auto);
+}
+.tileBack:nth-of-type(odd) {
+    background-color: #f8f1e5;
+}
+
+.tile, .tileBack {
+    z-index: 10;
     width: 25px;
     height: 25px;
 }
 
 .snakeBody {
-    background-color: olivedrab;
+    background-color: #598234;
 }
 
 .snakeHead {
-    background-color: green;
+    background-color: #486824;
 }
 
 .wall {
-    background-color: sienna;
+    background-color: #805a3b;
 }
 
 .apple {
-    background-color: red;
+    background-color: #fa4032;
 }
 
 .keyCapturer {
